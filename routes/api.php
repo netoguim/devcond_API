@@ -13,45 +13,40 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WallController;
 use App\Http\Controllers\WarningController;
 
-
-
-
 Route::get('/ping', function(){
-    return['pong'=>true];  
+    return ['pong' => true];
 });
 
-Route::get('/401', [AuthController::class, 'anauthorized'])->name('login');
+Route::get('/401', [AuthController::class, 'unauthorized'])->name('login');
 
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/register', [AuthController::class, 'register']);
 
-Route::middleware('auth:api')->group(function(){
+Route::middleware('auth:api')->group(function() {
     Route::post('/auth/validate', [AuthController::class, 'validateToken']);
     Route::post('/auth/logout', [AuthController::class, 'logout']);
 
-
-    // Mural de avisos 
+    // Mural de Avisos
     Route::get('/walls', [WallController::class, 'getAll']);
     Route::post('/wall/{id}/like', [WallController::class, 'like']);
-
 
     // Documentos
     Route::get('/docs', [DocController::class, 'getAll']);
 
-    // Livro de ocorrênciass
+    // Livro de ocorrências
     Route::get('/warnings', [WarningController::class, 'getMyWarnings']);
     Route::post('/warning', [WarningController::class, 'setWarning']);
     Route::post('/warning/file', [WarningController::class, 'addWarningFile']);
 
-    //Boletos
+    // Boletos
     Route::get('/billets', [BilletController::class, 'getAll']);
 
-    // Achados e perdidos
+    // Achados e Perdidos
     Route::get('/foundandlost', [FoundAndLostController::class, 'getAll']);
     Route::post('/foundandlost', [FoundAndLostController::class, 'insert']);
-    Route::put('/foundandlost', [FoundAndLostController::class, 'update']);
+    Route::put('/foundandlost/{id}', [FoundAndLostController::class, 'update']);
 
-    //unidade
+    // Unidade
     Route::get('/unit/{id}', [UnitController::class, 'getInfo']);
     Route::post('/unit/{id}/addperson', [UnitController::class, 'addPerson']);
     Route::post('/unit/{id}/addvehicle', [UnitController::class, 'addVehicle']);
@@ -60,17 +55,13 @@ Route::middleware('auth:api')->group(function(){
     Route::post('/unit/{id}/removevehicle', [UnitController::class, 'removeVehicle']);
     Route::post('/unit/{id}/removepet', [UnitController::class, 'removePet']);
 
-
-    //Reservas
+    // Reservas
     Route::get('/reservations', [ReservationController::class, 'getReservations']);
-    Route::get('/myreservations', [ReservationController::class, 'getMyReservations']);
+    Route::post('/reservation/{id}', [ReservationController::class, 'setReservation']);
 
     Route::get('/reservation/{id}/disableddates', [ReservationController::class, 'getDisabledDates']);
     Route::get('/reservation/{id}/times', [ReservationController::class, 'getTimes']);
 
-
-    Route::del('/myreservation/{id}', [ReservationController::class, 'delMyReservation']);
-    Route::post('/reservation/{id}', [ReservationController::class, 'setReservation']);
-
-
+    Route::get('/myreservations', [ReservationController::class, 'getMyReservations']);
+    Route::delete('/myreservation/{id}', [ReservationController::class, 'delMyReservation']);
 });
