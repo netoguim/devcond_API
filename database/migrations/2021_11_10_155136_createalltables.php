@@ -59,7 +59,7 @@ class Createalltables extends Migration
         
     });
 
-    Schema::create('wallikes', function(Blueprint $table) {
+    Schema::create('walllikes', function(Blueprint $table) {
         $table->id();
         $table->integer('id_wall');
         $table->integer('id_user');
