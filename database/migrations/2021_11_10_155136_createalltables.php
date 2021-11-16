@@ -43,7 +43,7 @@ class Createalltables extends Migration
         $table->string('plate');
     });
 
-    Schema::create('unipets', function(Blueprint $table) {
+    Schema::create('unitpets', function(Blueprint $table) {
         $table->id();
         $table->integer('id_unit');
         $table->string('name');
